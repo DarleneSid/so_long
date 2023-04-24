@@ -4,7 +4,7 @@ DIR_SRCS		=	srcs
 
 DIR_OBJS		=	objs
 
-SRCS_NAMES		=	main.c
+SRCS_NAMES		=	main.c parsing.c moves.c visualizer.c
 
 OBJS_NAMES		=	${SRCS_NAMES:.c=.o}
 
