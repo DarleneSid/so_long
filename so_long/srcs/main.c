@@ -6,7 +6,7 @@
 /*   By: dsydelny <dsydelny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 22:01:58 by dsydelny          #+#    #+#             */
-/*   Updated: 2023/04/23 22:31:32 by dsydelny         ###   ########.fr       */
+/*   Updated: 2023/04/24 23:54:48 by dsydelny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ void	free_dstr(char **dstr)
 		return ;
 	i = 0;
 	while (dstr[i])
-	{
 		free(dstr[i++]);
-	}
 	free(dstr);
 }
 
@@ -41,7 +39,7 @@ void	exit_safely(char **a, int error_code)
 	exit (1);
 }
 
-int main(int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_data	data;
 
@@ -50,11 +48,12 @@ int main(int ac, char **av)
 		return (write(2, "Error\n", 6));
 	if (ft_strlen(av[1]) <= 4)
 		return (ft_printf("Not valid file!\n"), 1);
-	int a = ft_strncmp(&av[1][ft_strlen(av[1]) - 4], ".ber\0", 5);
-	if (a != 0)
+	if (ft_strncmp(&av[1][ft_strlen(av[1]) - 4], ".ber\0", 5))
 		return (ft_printf("It has to end with .ber!\n"), 1);
 	if (parsing(& data, av[1]))
 		return (1);
+	if (startgame(& data))
+		return (free_dstr(data.map), 1);
 	exit_safely(data.map, 0);
 }
 
@@ -76,5 +75,3 @@ minilib????
 // x = 0;
 // printf (x++) 0
 // printf (x) 1
-
-

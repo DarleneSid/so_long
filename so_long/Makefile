@@ -4,7 +4,7 @@ DIR_SRCS		=	srcs
 
 DIR_OBJS		=	objs
 
-SRCS_NAMES		=	main.c parsing.c moves.c visualizer.c
+SRCS_NAMES		=	main.c parsing.c moves.c visualizer.c game.c mouvements.c
 
 OBJS_NAMES		=	${SRCS_NAMES:.c=.o}
 
@@ -26,6 +26,8 @@ CC				=	cc
 
 CDFLAGS 		=	-MMD -MP
 
+MLX_FLAGS		=	-lm -lmlx -lXext -lX11
+
 CFLAGS			=	-g3 -Wall -Werror -Wextra
 
 all:	${NAME}
@@ -39,10 +41,12 @@ $(OBJS) : $(DIR_OBJS)/%.o : $(DIR_SRCS)/%.c
 $(NAME): $(DIR_OBJS) $(OBJS) 
 	make -C libft
 	make -C ft_printf
-	$(CC) -g3 ${INC} $(OBJS) $(LIB) -o $(NAME)
+	make -C mlx
+	$(CC) -g3 ${INC} $(OBJS) $(LIB)  mlx/libmlx.a mlx/libmlx_Linux.a -L. -lXext -L. -lX11 -o $(NAME)
 	@echo "\033[31;5mso_long\033[0m"
 
 clean:
+	make clean -C mlx
 	make clean -C libft
 	make clean -C ft_printf
 	rm -rf ${DIR_OBJS}

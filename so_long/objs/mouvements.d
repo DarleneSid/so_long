@@ -1,4 +1,4 @@
-objs/parsing.o: srcs/parsing.c includes/so_long.h \
+objs/mouvements.o: srcs/mouvements.c includes/so_long.h \
   includes/../libft/libft.h includes/../mlx/mlx.h \
   includes/../mlx/mlx_int.h includes/../ft_printf/ft_printf.h
 

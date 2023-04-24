@@ -6,7 +6,7 @@
 /*   By: dsydelny <dsydelny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 16:24:27 by dsydelny          #+#    #+#             */
-/*   Updated: 2023/04/23 22:31:06 by dsydelny         ###   ########.fr       */
+/*   Updated: 2023/04/24 23:57:24 by dsydelny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	is_there_e_or_c(char **map)
 	x = -1;
 	while (map[++x])
 	{
-		printf("%s\n", map[x]);
+		//printf("%s\n", map[x]);
 		if (ft_strchr(map[x], 'C') || ft_strchr(map[x], 'E'))
 			return (free_dstr(map), 1);
 	}

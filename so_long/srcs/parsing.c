@@ -6,7 +6,7 @@
 /*   By: dsydelny <dsydelny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 17:17:43 by dsydelny          #+#    #+#             */
-/*   Updated: 2023/04/23 22:13:45 by dsydelny         ###   ########.fr       */
+/*   Updated: 2023/04/25 00:07:55 by dsydelny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ int	check_borders(t_data *data)
 	x = -1;
 	y = -1;
 	len_y = ft_strlen(data->map[0]) - 1;
+	data->width = len_y + 1;
 	while (data->map[++x]) 
 		if (data->map[x][0] != '1' || data->map[x][len_y] != '1')
 			return(1);
 	len_x = x - 1;
+	data->height = len_x + 1;
 	while (++y <= len_y)
 		if (data->map[0][y] != '1' || data->map[len_x][y] != '1')
 			return(1);
@@ -64,9 +66,17 @@ int map_rules(t_data *data)
 		while (data->map[x][++y])
 		{
 			if (data->map[x][y] == 'P')
+			{
+				data->pos_p.x = x;
+				data->pos_p.y = y;
 				counter.cnt_p++;
+			}
 			if (data->map[x][y] == 'E')
+			{
+				data->pos_e.x = x;
+				data->pos_e.y = y;
 				counter.cnt_e++;
+			}
 			if (data->map[x][y] == 'C')
 				counter.cnt_c++;
 		}
@@ -83,21 +93,16 @@ void print_map(char **map)
 		printf("%s\n", map[i]);
 }
 
-int fill_map(t_data *data, char *file)
+int fill_map(t_data *data, char *file, int fd)
 {
-	int		fd;
 	static int		var = 0;
 	char 	*str;
 	char 	*tmp;
 
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		(ft_printf("Not valid fd!\n"), exit(0));
-	str = get_next_line(fd);
+	str = ft_calloc(1, 1);
 	if (!str)
-		return (close(fd), 1);
-	data->size = ft_strlen(str);
-	while (str)
+		return (ft_printf("Malloc failed"), close(fd), exit(0), 1);
+	while (1)
 	{
 		tmp = get_next_line(fd);
 		if (!tmp)
@@ -107,21 +112,24 @@ int fill_map(t_data *data, char *file)
 		str = ft_gnl_strjoin(str, tmp);
 		free(tmp);
 	}
-	close(fd);
 	free(tmp);
 	data->map = ft_split(str, '\n');
-	if (!*data->map)
-		return (free(str), 1);
+	if (!data->map)
+		return (free(str), exit(0), 1);
 	free(str);
-	if (var == 1)
-		return (1);
-	return (0);
+	return (var);
 }
 
 int	parsing(t_data *data, char *file)
 {
-	if (fill_map(data, file))
-		return (exit_safely(data->map, 1), 1);
+	int	fd;
+
+	fd = open(file, O_RDONLY);
+	if (fd == -1)
+		(ft_printf("Not valid fd!\n"), exit(0));
+	if (fill_map(data, file, fd))
+		return (exit_safely(data->map, 1), close(fd), 1);
+	close(fd);
 	//printf_map(data->map);
 	//resest_cursor(map_size(data->map));
 	if (check_borders(data))
