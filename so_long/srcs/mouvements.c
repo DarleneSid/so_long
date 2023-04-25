@@ -6,7 +6,7 @@
 /*   By: dsydelny <dsydelny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 19:40:51 by dsydelny          #+#    #+#             */
-/*   Updated: 2023/04/25 00:03:01 by dsydelny         ###   ########.fr       */
+/*   Updated: 2023/04/25 20:50:10 by dsydelny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,24 @@ int	ft_freemlx(t_data *data)
 	mlx_destroy_window(data->mlx->mlx, data->mlx->win);
 	mlx_destroy_display(data->mlx->mlx);
 	free(data->mlx->mlx);
+	exit_safely(data->map, 4);
+	exit(1);
+	return (0);
+}
+
+int	ft_free_window(t_data *data)
+{
+	printf("here\n");
+	// if (!data->mlx->mlx || !data->mlx->win)
+	// 	exit(1);
+	mlx_clear_window(data->mlx->mlx, data->mlx->win);
+	printf("here1\n");
+	mlx_destroy_window(data->mlx->mlx, data->mlx->win);
+	printf("here2\n");
+	mlx_destroy_display(data->mlx->mlx);
+	printf("here3\n");
+	free(data->mlx->mlx);
+	printf("here4\n");
 	exit_safely(data->map, 4);
 	exit(1);
 	return (0);
@@ -71,8 +89,8 @@ int	key_hook(int keycode, t_data *data)
 		data->map[data->pos_p.x][data->pos_p.y += 1] = 'P';
 		
 	}
-	if (data->map[data->pos_p.x][data->pos_p.y] ==
-	data->map[data->pos_e.x][data->pos_e.y])
+	if ((data->map[data->pos_p.x][data->pos_p.y] ==
+	data->map[data->pos_e.x][data->pos_e.y]) && (data->nb_c == 0))
 		ft_freemlx(data);
 	// if (data->nb_c == 0)
 	// 	data->cond = 4;

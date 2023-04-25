@@ -6,7 +6,7 @@
 /*   By: dsydelny <dsydelny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:44:14 by dsydelny          #+#    #+#             */
-/*   Updated: 2023/04/25 00:06:12 by dsydelny         ###   ########.fr       */
+/*   Updated: 2023/04/25 21:01:51 by dsydelny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,37 +23,43 @@ int	loadmap(t_data *data, t_mlx *mlx)
 		while (data->map[x][++y])
 		{
 			if (data->map[x][y] == '1')
-				mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img[2], y * 64, x * 64);
+				mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img[2], y * 100, x * 100);
 			if (data->map[x][y] == 'C')
-				mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img[3], y * 64, x * 64);		
+				mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img[3], y * 100, x * 100);		
 			if (data->map[x][y] == 'P')
-				mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img[0], y * 64, x * 64);		
+				mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img[0], y * 100, x * 100);		
 			if (data->map[x][y] == '0' || data->map[x][y] == 'E')
 				// mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img[data->cond], y * 64, x * 64);
-				mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img[1], y * 64, x * 64);
+				mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img[1], y * 100, x * 100);
 			if (data->nb_c == 0)
-				mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img[4], data->pos_e.y * 64, data->pos_e.x * 64);
+				mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img[4], data->pos_e.y * 100, data->pos_e.x * 100);
 		}
 	}
 	// rand++;
 	return (0);
 }
+// rand for changing images [number of image - rand %2]
 
-
-int	loadimages(t_mlx *mlx)
+int	loadimages(t_mlx *mlx, t_data *data)
 {
 	int	r;
 	int i;
-	static const char	*images[5] = {
-		"imgs/wall.xpm", "imgs/bow.xpm", "imgs/tree.xpm", "imgs/flower.xpm", "imgs/door.xpm"
+	static char	*images[5] = {
+		"imgs/rob.xpm", "imgs/base.xpm", "imgs/light.xpm", "imgs/money.xpm", "imgs/doors.xpm",
 	};
 
 	i = -1;
 	while (++i < 5)
 	{
 		mlx->img[i] = mlx_xpm_file_to_image(mlx->mlx, images[i], &r, &r);
-		// if (!mlx->img[i])
-			// free(imgs, i)
+		if (!mlx->img[i])
+		{
+			r = 0;
+			while (r < i)
+				mlx_destroy_image(data->mlx->mlx, data->mlx->img[r++]);
+			ft_free_window(data);
+			return (1);
+		}
 	}	
 
 	return (0);	
@@ -89,8 +95,9 @@ int startgame(t_data *data)
 	// data->cond = 1;
 	mlx_do_key_autorepeaton(mlx.mlx);
 	// check return
-	mlx.win = mlx_new_window(mlx.mlx, data->width * 64, data->height * 64, "Hello dasha!");
-	loadimages(&mlx);
+	mlx.win = mlx_new_window(mlx.mlx, data->width * 100, data->height * 100, "Hello dasha!");
+	if (loadimages(&mlx, data))
+		return (1);
 	loadmap(data, &mlx);
 	mlx_hook(mlx.win, KeyPress, KeyPressMask, key_hook, data);
 	mlx_hook(mlx.win, 17, 0, ft_freemlx, data);

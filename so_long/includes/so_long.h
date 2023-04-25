@@ -6,7 +6,7 @@
 /*   By: dsydelny <dsydelny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 21:21:26 by dsydelny          #+#    #+#             */
-/*   Updated: 2023/04/24 23:44:11 by dsydelny         ###   ########.fr       */
+/*   Updated: 2023/04/25 20:52:16 by dsydelny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,9 @@ void	visualize(char **map);
 
 /* game.c */
 int startgame(t_data *data);
-int	loadimages(t_mlx *mlx);
+int	loadimages(t_mlx *mlx, t_data *data);
 int	loadmap(t_data *data, t_mlx *mlx);
-
+int	ft_free_window(t_data *data);
 int	key_hook(int keycode, t_data *data);
 int	ft_freemlx(t_data *data);
 

@@ -6,7 +6,7 @@
 /*   By: dsydelny <dsydelny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 17:17:43 by dsydelny          #+#    #+#             */
-/*   Updated: 2023/04/25 00:07:55 by dsydelny         ###   ########.fr       */
+/*   Updated: 2023/04/25 18:41:27 by dsydelny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int fill_map(t_data *data, char *file, int fd)
 	free(tmp);
 	data->map = ft_split(str, '\n');
 	if (!data->map)
-		return (free(str), exit(0), 1);
+		return (free(str), close(fd), exit(0), 1);
 	free(str);
 	return (var);
 }
@@ -128,8 +128,10 @@ int	parsing(t_data *data, char *file)
 	if (fd == -1)
 		(ft_printf("Not valid fd!\n"), exit(0));
 	if (fill_map(data, file, fd))
-		return (exit_safely(data->map, 1), close(fd), 1);
+		return (close(fd), exit_safely(data->map, 1), 1);
 	close(fd);
+	if (!*data->map)
+		return (exit_safely(data->map, 1), 1);
 	//printf_map(data->map);
 	//resest_cursor(map_size(data->map));
 	if (check_borders(data))
