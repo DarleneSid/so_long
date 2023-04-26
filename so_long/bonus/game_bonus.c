@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   game.c                                             :+:      :+:    :+:   */
+/*   game_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsydelny <dsydelny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 17:44:14 by dsydelny          #+#    #+#             */
-/*   Updated: 2023/04/26 20:16:33 by dsydelny         ###   ########.fr       */
+/*   Updated: 2023/04/26 21:22:17 by dsydelny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
-void	put_image(t_mlx *mlx, int y, int x, char c)
+void	puttowindow(t_mlx *mlx, int y, int x, char c)
 {
 	if (c == '1')
 		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img[2],
@@ -25,6 +25,9 @@ void	put_image(t_mlx *mlx, int y, int x, char c)
 			y * 90, x * 90);
 	if (c == '0' || c == 'E')
 		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img[1],
+			y * 90, x * 90);
+	if (c == '2')
+		mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img[5],
 			y * 90, x * 90);
 }
 
@@ -39,7 +42,7 @@ void	loadmap(t_data *data, t_mlx *mlx)
 		y = -1;
 		while (data->map[x][++y])
 		{
-			put_image(mlx, y, x, data->map[x][y]);
+			puttowindow(mlx, y, x, data->map[x][y]);
 			if (data->nb_c == 0)
 				mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img[4],
 					data->pos_e.y * 90, data->pos_e.x * 90);
@@ -51,12 +54,12 @@ int	loadimages(t_mlx *mlx, t_data *data)
 {
 	int			r;
 	int			i;
-	static char	*images[5] = {"imgs/rob.xpm", "imgs/base.xpm",
-		"imgs/wall.xpm", "imgs/money.xpm", "imgs/doors.xpm",
+	static char	*images[6] = {"imgs/rob.xpm", "imgs/base.xpm",
+		"imgs/wall.xpm", "imgs/money.xpm", "imgs/doors.xpm", "imgs/1312.xpm"
 	};
 
 	i = -1;
-	while (++i < 5)
+	while (++i < 6)
 	{
 		mlx->img[i] = mlx_xpm_file_to_image(mlx->mlx, images[i], &r, &r);
 		if (!mlx->img[i])

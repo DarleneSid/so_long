@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsydelny <dsydelny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 21:21:26 by dsydelny          #+#    #+#             */
-/*   Updated: 2023/04/26 20:22:19 by dsydelny         ###   ########.fr       */
+/*   Updated: 2023/04/26 21:57:30 by dsydelny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
+#ifndef SO_LONG_BONUS_H
+# define SO_LONG_BONUS_H
 
 # define MAX_LINES 40
 # define PREV_LN "\033[A"
@@ -31,7 +31,7 @@ typedef struct t_mlx
 {
 	void	*mlx;
 	void	*win;
-	void	*img[5];
+	void	*img[6];
 }			t_mlx;
 
 typedef struct t_data 
@@ -44,6 +44,7 @@ typedef struct t_data
 	int			steps;
 	t_moha		pos_p;
 	t_moha		pos_e;
+	t_moha		pos_en;
 	t_mlx		*mlx;
 }			t_data;
 
@@ -52,6 +53,7 @@ typedef struct t_cnt
 	int	cnt_p;
 	int	cnt_c;
 	int	cnt_e;
+	int	cnt_en;
 }			t_cnt;
 
 /* parsing.c */
@@ -78,9 +80,9 @@ int		key_hook(int keycode, t_data *data);
 int		ft_freemlx(t_data *data);
 
 /* steps.c */
-int	step_up(int keycode, t_data *data);
-int	step_left(int keycode, t_data *data);
-int	step_down(int keycode, t_data *data);
-int	step_right(int keycode, t_data *data);
+int		step_up(int keycode, t_data *data);
+int		step_left(int keycode, t_data *data);
+int		step_down(int keycode, t_data *data);
+int		step_right(int keycode, t_data *data);
 
 #endif

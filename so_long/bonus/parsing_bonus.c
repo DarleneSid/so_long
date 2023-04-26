@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   parsing_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsydelny <dsydelny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/22 17:17:43 by dsydelny          #+#    #+#             */
-/*   Updated: 2023/04/26 17:18:07 by dsydelny         ###   ########.fr       */
+/*   Updated: 2023/04/26 21:39:01 by dsydelny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 int	check_borders(t_data *data)
 {
@@ -45,7 +45,7 @@ int	check_valid_chars(t_data *data)
 		y = -1;
 		while (data->map[x][++y])
 		{
-			if (!ft_strchr("1CP0E", data->map[x][y]))
+			if (!ft_strchr("1CP0E2", data->map[x][y]))
 				return (1);
 			if (data->map[x][y] == 'P')
 			{
@@ -56,6 +56,11 @@ int	check_valid_chars(t_data *data)
 			{
 				data->pos_e.x = x;
 				data->pos_e.y = y;
+			}
+			if (data->map[x][y] == '2')
+			{
+				data->pos_en.x = x;
+				data->pos_en.y = y;
 			}
 		}
 	}
@@ -81,6 +86,8 @@ int	map_rules(t_data *data)
 				counter.cnt_e++;
 			if (data->map[x][y] == 'C')
 				counter.cnt_c++;
+			if (data->map[x][y] == '2')
+				counter.cnt_en++;
 		}
 	}
 	data->nb_c = counter.cnt_c;

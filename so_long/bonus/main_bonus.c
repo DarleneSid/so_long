@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsydelny <dsydelny@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/20 22:01:58 by dsydelny          #+#    #+#             */
-/*   Updated: 2023/04/26 18:29:26 by dsydelny         ###   ########.fr       */
+/*   Updated: 2023/04/26 21:14:24 by dsydelny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 void	free_dstr(char **dstr)
 {
@@ -56,3 +56,22 @@ int	main(int ac, char **av)
 		return (free_dstr(data.map), 1);
 	exit_safely(data.map, 0);
 }
+
+/*
+PLAN 
+
+i need to find exit?? make sure theres single e and p and c
+(counter should be 1) for p and e
+
+minilib????
+
+*/
+
+// x = 0;
+
+// printf (++x) 1
+// printf (x) 1
+
+// x = 0;
+// printf (x++) 0
+// printf (x) 1
